@@ -26,6 +26,7 @@ class StoreCitaRequest extends FormRequest
             'hora' => ['required'],
             'mascota_id' => ['required', 'exists:mascotas,id'],
             'veterinario_id' => ['required', 'exists:veterinarios,id'],
+            'user_id' => ['required', 'exists:users,id'],
         ];
     }
 }

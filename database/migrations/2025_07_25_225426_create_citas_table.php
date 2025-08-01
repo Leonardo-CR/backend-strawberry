@@ -19,9 +19,11 @@ return new class extends Migration
             //FK
             $table->unsignedBigInteger('mascota_id');
             $table->unsignedBigInteger('veterinario_id');
+            $table->unsignedBigInteger('user_id');
             
             $table->foreign('mascota_id')->references('id')->on('mascotas');
             $table->foreign('veterinario_id')->references('id')->on('veterinarios');
+            $table->foreign('user_id')->references('id')->on('users');
 
 
             $table->timestamps();

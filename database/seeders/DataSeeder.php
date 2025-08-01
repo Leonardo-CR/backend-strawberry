@@ -154,18 +154,21 @@ class DataSeeder extends Seeder
                 'fecha' => '2025-07-25',
                 'hora' => '10:00:00',
                 'mascota_id' => 1,
+                'user_id' => 1,
                 'veterinario_id' => 1,
             ],
             [
                 'fecha' => '2025-07-26',
                 'hora' => '12:30:00',
                 'mascota_id' => 1,
+                'user_id' => 1,
                 'veterinario_id' => 1,
             ],
             [
                 'fecha' => '2025-07-27',
                 'hora' => '15:00:00',
                 'mascota_id' => 1,
+                'user_id' => 1,
                 'veterinario_id' => 1,
             ],
         ]);

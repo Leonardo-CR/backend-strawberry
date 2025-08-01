@@ -6,6 +6,7 @@ use App\Http\Requests\StoreCitaRequest;
 use App\Http\Resources\CitaResource;
 use App\Models\Cita;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CitaController extends Controller
 {
@@ -58,4 +59,36 @@ class CitaController extends Controller
     {
         //
     }
+    // citas del usuario autenticado 
+    public function misCitas()
+    {
+        $usuario = Auth::user(); // Obtener usuario autenticado vía JWT
+
+        $citas = Cita::where('user_id', $usuario->id)
+                    ->orderBy('fecha', 'desc')
+                    ->orderBy('hora', 'desc')
+                    ->get();
+
+        return CitaResource::collection($citas);
+    }
+    //obtener las citas por usuario usando el id ;b
+    public function citasPorUsuario($id)
+    {
+        $citas = Cita::with(['mascota', 'veterinario'])
+            ->whereHas('mascota', fn($query) => $query->where('cliente_id', $id))
+            ->get()
+            ->map(fn($cita) => [
+                'fecha' => $cita->fecha,
+                'hora' => $cita->hora,
+                'mascota_id' => $cita->mascota_id,
+                'mascota_nombre' => optional($cita->mascota)->nombre,
+                'veterinario_id' => $cita->veterinario_id,
+                'veterinario_nombre' => optional($cita->veterinario)->nombre,
+            ]);
+
+        return response()->json(['data' => $citas]);
+    }
+
+
+
 }

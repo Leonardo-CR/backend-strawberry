@@ -19,8 +19,8 @@ class CitaResource extends JsonResource
             'hora' => $this->hora,
             'mascota_id' => $this->mascota_id,
             'mascota_nombre' => $this->mascota->nombre,
-            'veterinario_id' => $this->veterinario_id,
-            'veterinario_nombre' => $this->veterinario->nombre,
+            'veterinario_id' => $this->veterinario->veterinario_id,
+            //'veterinario_nombre' => $this->veterinario->nombre,
         ];
     }
 }

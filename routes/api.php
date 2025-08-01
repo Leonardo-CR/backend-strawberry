@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CitaController;
 use App\Http\Controllers\ClientsController;
 use App\Http\Controllers\MascotaController;
 
@@ -21,6 +22,8 @@ Route::middleware('auth:api')->group(function () {
     Route::post('logout', [AuthController::class, 'logout'])->name('logout');
     Route::get('me', [AuthController::class, 'me'])->name('me');
 
+    Route::post('mascota/store',[MascotaController::class,'store'])->name('mascotas.store');
+
     // Rutas de clientes
     Route::prefix('client')->group(function () {
     Route::get('index', [ClientsController::class, 'index'])->name('clients.index');
@@ -29,6 +32,13 @@ Route::middleware('auth:api')->group(function () {
     Route::post('update/{user}',[ClientsController::class, 'update']);
     Route::delete('destroy/{user}', [ClientsController::class, 'delete'])->name('clients.destroy');
     Route::get('show/{user}',[ClientsController::class,'show'])->name('clients.show');
+
+    Route::get('my-appointments',[CitaController::class, 'misCitas'])->name('recetas.index');
+
+    
+
+    
+
 });
 
 

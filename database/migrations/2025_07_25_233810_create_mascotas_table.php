@@ -17,7 +17,7 @@ return new class extends Migration
             $table->date('fecha_nacimiento');
             $table->decimal('peso');
             $table->string('raza');
-            $table->string('ruta_imagen');
+            $table->string('ruta_imagen')->nullable();
 
             //FK
             $table->unsignedBigInteger('especie_id');

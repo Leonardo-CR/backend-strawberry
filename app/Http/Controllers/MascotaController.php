@@ -18,14 +18,40 @@ class MascotaController extends Controller
     }
 
     //Crear Paciente
-    public function store(StoreMascotaRequest $request)
-    {
-        //validacion usando el request
-        $data = $request->validated();
-        $mascota = Mascota::create($data);
-        // Respuesta JSON con el recurso, código 201 (creado)
-        return new MascotaResource($mascota);
+    public function store(Request $request)
+{
+    $user = auth('api')->user();
+
+    // Contar mascotas registradas por este usuario
+    $cantidadMascotas = Mascota::where('cliente_id', $user->id)->count();
+
+    // Validar límite de 3 mascotas
+    if ($cantidadMascotas >= 3) {
+        return response()->json([
+            'message' => 'Has alcanzado el límite máximo de 3 mascotas.'
+        ], 403);
     }
+
+    // Validar datos recibidos
+    $validated = $request->validate([
+        'nombre' => 'required|string',
+        'fecha_nacimiento' => 'required|date',
+        'peso' => 'required|numeric',
+        'raza' => 'nullable|string',
+        'especie_id' => 'required|exists:especies,id',
+    ]);
+
+    // Asignar cliente_id desde usuario autenticado
+    $validated['cliente_id'] = $user->id;
+
+    $mascota = Mascota::create($validated);
+
+    return response()->json([
+        'message' => 'Mascota registrada correctamente',
+        'data' => $mascota,
+    ], 201);
+}
+
     //Editar Paciente
     public function update(StoreMascotaRequest $request, Mascota $mascota)
     {

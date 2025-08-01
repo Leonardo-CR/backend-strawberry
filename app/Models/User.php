@@ -67,5 +67,8 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasMany(Mascota::class,'cliente_id');
     }
 
-
+    public function citas()
+    {
+        return $this->hasMany(Cita::class);
+    }
 }

@@ -12,13 +12,20 @@ class Cita extends Model
         'fecha',
         'hora',
         'mascota_id',
+        'user_id',
         'veterinario_id',
     ];
     //Casteo de datos ;b
-    protected $casts = [
-        'fecha' => 'date',
-        'hora' => 'datetime:H:i',
-    ];
+    // protected $casts = [
+    //     'fecha' => 'date',
+    //     'hora' => 'datetime:H:i',
+    // ];
+
+    // App\Models\Cita.php
+    public function usuario()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 
     //Relacion mascotas
     public function mascota()
@@ -28,6 +35,6 @@ class Cita extends Model
     //Relacion recetas
     public function veterinario()
     {
-      return $this->belongsTo(Veterinario::class);
+      return $this->belongsTo(Veterinario::class, 'veterinario_id');
     }
 }

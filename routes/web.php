@@ -6,6 +6,7 @@ use App\Http\Controllers\ClientsController;
 use App\Http\Controllers\MascotaController;
 use App\Http\Controllers\RecetaController;
 use App\Http\Controllers\RegistrationController;
+use App\Models\Especie;
 use Illuminate\Support\Facades\Route;
 
 
@@ -24,7 +25,7 @@ Route::prefix('client')->group(function () {
 Route::prefix('pacient')->group(function(){
     Route::get('index',[MascotaController::class,'index'])->name('mascotas.index');
     Route::get('show/{mascota}',[MascotaController::class,'show'])->name('mascotas.show');
-    Route::post('store',[MascotaController::class,'store'])->name('mascotas.store');
+    
     Route::post('update/{mascota}',[MascotaController::class,'update'])->name('mascotas.update');
     Route::delete('destroy/{mascota}',[MascotaController::class,'destroy'])->name('mascotas.destroy');
     //Recetas de la mascota
@@ -39,5 +40,13 @@ Route::prefix('prescriptions')->group(function(){
     Route::put('update/{receta}',[RecetaController::class,'update'])->name('recetas.update');
 });
 
-// Generar todas las rutas de API (nuevo formato ;b)
-Route::apiResource('appointments',CitaController::class);
+// Rutas citas de clientes xd
+Route::prefix('appointments')->group(function(){
+    Route::get('client/appointments/{id}', [CitaController::class, 'citasPorUsuario'])->name('client.appointments');
+    Route::post('client/appointments',[CitaController::class, 'store'])->name('appointments.store');
+});
+
+Route::get('/especies', function () {
+    return Especie::all(); // Devuelve todas las especies
+});
+
